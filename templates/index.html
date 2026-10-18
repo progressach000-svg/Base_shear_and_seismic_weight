@@ -1,1 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seismic Weight &amp; Base Shear</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/index.css">
+</head>
+<body>
+    <div class="background-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+    </div>
 
+    <div class="container">
+        <header>
+            <h1>Seismic Weight &amp; Base Shear</h1>
+            <p class="subtitle">IS code method: lumped floor weights and lateral force distribution</p>
+            <nav class="tabs">
+                <button type="button" class="tab-btn active" data-tab="seismic">1 · Seismic Weight</button>
+                <button type="button" class="tab-btn" data-tab="baseshear">2 · Base Shear</button>
+            </nav>
+        </header>
+
+        <!-- ================= PART 1: SEISMIC WEIGHT ================= -->
+        <main id="tab-seismic" class="tab-panel active">
+            <div class="stack">
+                <section class="glass-panel">
+                    <h2>Seismic Weight Inputs</h2>
+                    <form id="sw-form">
+                        <h3 class="form-section-title">General &amp; Materials</h3><div class="three-col"><div class="input-group"><label for="sw_N_floors">Number of Floors (N)</label><div class="input-wrapper"><input type="number" id="sw_N_floors" name="N_floors" min="1" step="1" placeholder="e.g. 4" required></div></div><div class="input-group"><label for="sw_gamma_c">Concrete Unit Weight (γ<sub>c</sub>)</label><div class="input-wrapper"><input type="number" id="sw_gamma_c" name="gamma_c" min="0" step="any" value="25" required><span class="unit">kN/m³</span></div></div><div class="input-group"><label for="sw_gamma_w">Wall Unit Weight (γ<sub>w</sub>)</label><div class="input-wrapper"><input type="number" id="sw_gamma_w" name="gamma_w" min="0" step="any" value="20" required><span class="unit">kN/m³</span></div></div></div><h3 class="form-section-title">Typical Floor Geometry (same on every floor)</h3><div class="two-col"><div class="input-group"><label for="sw_As">Slab Plan Area (A<sub>s</sub>)</label><div class="input-wrapper"><input type="number" id="sw_As" name="As" min="0.01" step="any" placeholder="e.g. 150" required><span class="unit">m²</span></div></div><div class="input-group"><label for="sw_Ds">Slab Thickness (D<sub>s</sub>)</label><div class="input-wrapper"><input type="number" id="sw_Ds" name="Ds" min="0.001" step="any" placeholder="e.g. 0.125" required><span class="unit">m</span></div></div></div><div class="three-col"><div class="input-group"><label for="sw_Lb">Total Beam Length (L<sub>b</sub>)</label><div class="input-wrapper"><input type="number" id="sw_Lb" name="Lb" min="0" step="any" value="0" required><span class="unit">m</span></div></div><div class="input-group"><label for="sw_bb">Beam Width (b<sub>b</sub>)</label><div class="input-wrapper"><input type="number" id="sw_bb" name="bb" min="0" step="any" value="0" required><span class="unit">m</span></div></div><div class="input-group"><label for="sw_Db">Beam Overall Depth (D<sub>b</sub>)</label><div class="input-wrapper"><input type="number" id="sw_Db" name="Db" min="0" step="any" value="0" required><span class="unit">m</span></div></div></div><div class="three-col"><div class="input-group"><label for="sw_sum_Ac">Total Column Area (ΣA<sub>c</sub>)</label><div class="input-wrapper"><input type="number" id="sw_sum_Ac" name="sum_Ac" min="0" step="any" value="0" required><span class="unit">m²</span></div></div><div class="input-group"><label for="sw_Lw">Total Wall Length (L<sub>w</sub>)</label><div class="input-wrapper"><input type="number" id="sw_Lw" name="Lw" min="0" step="any" value="0" required><span class="unit">m</span></div></div><div class="input-group"><label for="sw_Bw">Wall Thickness (B<sub>w</sub>)</label><div class="input-wrapper"><input type="number" id="sw_Bw" name="Bw" min="0" step="any" value="0" required><span class="unit">m</span></div></div></div><h3 class="form-section-title">Staircase (leave 0 if none; tick the floors that have one below)</h3><div class="three-col"><div class="input-group"><label for="sw_st_n">No. of Steps (n)</label><div class="input-wrapper"><input type="number" id="sw_st_n" name="st_n" min="0" step="1" value="0" required></div></div><div class="input-group"><label for="sw_st_tread">Tread</label><div class="input-wrapper"><input type="number" id="sw_st_tread" name="st_tread" min="0" step="any" value="0" required><span class="unit">m</span></div></div><div class="input-group"><label for="sw_st_riser">Riser</label><div class="input-wrapper"><input type="number" id="sw_st_riser" name="st_riser" min="0" step="any" value="0" required><span class="unit">m</span></div></div></div><div class="three-col"><div class="input-group"><label for="sw_st_twaist">Waist Slab Thickness (t<sub>waist</sub>)</label><div class="input-wrapper"><input type="number" id="sw_st_twaist" name="st_twaist" min="0" step="any" value="0" required><span class="unit">m</span></div></div><div class="input-group"><label for="sw_st_width">Flight Width</label><div class="input-wrapper"><input type="number" id="sw_st_width" name="st_width" min="0" step="any" value="0" required><span class="unit">m</span></div></div><div class="input-group"><label for="sw_st_m">No. of Landings (m)</label><div class="input-wrapper"><input type="number" id="sw_st_m" name="st_m" min="0" step="1" value="0" required></div></div></div><div class="three-col"><div class="input-group"><label for="sw_st_Ll">Landing Length</label><div class="input-wrapper"><input type="number" id="sw_st_Ll" name="st_Ll" min="0" step="any" value="0" required><span class="unit">m</span></div></div><div class="input-group"><label for="sw_st_Bl">Landing Width</label><div class="input-wrapper"><input type="number" id="sw_st_Bl" name="st_Bl" min="0" step="any" value="0" required><span class="unit">m</span></div></div><div class="input-group"><label for="sw_st_tl">Landing Thickness</label><div class="input-wrapper"><input type="number" id="sw_st_tl" name="st_tl" min="0" step="any" value="0" required><span class="unit">m</span></div></div></div><h3 class="form-section-title">Floor-wise Data</h3><div class="apply-all"><div class="input-group"><label for="sw_h_all">Floor Height (h)</label><div class="input-wrapper"><input type="number" id="sw_h_all" min="0.01" step="any" value="3.0" required><span class="unit">m</span></div></div><div class="input-group"><label for="sw_LL_all">Live Load (LL)</label><div class="input-wrapper"><input type="number" id="sw_LL_all" min="0" step="any" value="3" required><span class="unit">kN/m²</span></div></div><button type="button" class="btn-secondary" id="sw-apply-all">Apply to all floors</button></div><div class="table-wrap"><table class="data"><thead><tr><th>Floor</th><th>Height h (m)</th><th>Live Load (kN/m²)</th><th class="center">Staircase</th></tr></thead><tbody id="sw-floor-rows"></tbody></table></div><small class="help-text">Roof: columns and walls count at half height, staircase counts at half the weight of a normal floor, and live load is ignored.</small>
+                        <button type="submit" class="btn-primary">Calculate Seismic Weight
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                        </button>
+                    </form>
+                </section>
+
+                <section class="glass-panel" id="sw-result" style="display:none;">
+                    <div class="result-header">
+                        <h2>Seismic Weight Results (kN)</h2>
+                        <div id="sw-badge" class="badge success"></div>
+                    </div>
+                    <div class="table-wrap"><table class="data">
+                        <thead><tr><th>Floor</th><th>Level (m)</th><th>W<sub>slab</sub></th><th>W<sub>beam</sub></th><th>W<sub>column</sub></th><th>W<sub>wall</sub></th><th>W<sub>stairs</sub></th><th>DL<sub>i</sub></th><th>LL<sub>seismic,i</sub></th><th>W<sub>s,i</sub></th></tr></thead>
+                        <tbody id="sw-tbody"></tbody>
+                    </table></div>
+                    <div class="final-verdict">
+                        <div class="verdict-card">
+                            <span class="verdict-label">Total Seismic Weight (W<sub>s</sub>)</span>
+                            <span class="verdict-value"><span id="sw-total"></span> <span style="font-size:0.5em">kN</span></span>
+                        </div>
+                    </div>
+                    <button type="button" class="btn-primary" id="sw-to-bs" style="margin-top:0">Continue to Base Shear
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                    </button>
+                </section>
+            </div>
+        </main>
+
+        <!-- ================= PART 2: BASE SHEAR ================= -->
+        <main id="tab-baseshear" class="tab-panel">
+            <div class="stack">
+                <section class="glass-panel">
+                    <h2>Base Shear Inputs</h2>
+                    <div id="bs-empty" class="notice warn">Seismic weight has not been calculated yet. Complete Part 1 first, its floor weights and levels are used here automatically.</div>
+                    <div id="bs-stale" class="notice warn" style="display:none;">Part 1 inputs were changed after the last calculation. Recalculate seismic weight to update these values.</div>
+                    <div id="bs-source" style="display:none;">
+                        <h3 class="form-section-title">Imported from Seismic Weight</h3>
+                        <div class="table-wrap"><table class="data">
+                            <thead><tr><th>Floor</th><th>Level h<sub>i</sub> (m)</th><th>W<sub>s,i</sub> (kN)</th></tr></thead>
+                            <tbody id="bs-source-body"></tbody>
+                            <tfoot><tr class="total"><td>Total W<sub>s</sub></td><td></td><td id="bs-source-total"></td></tr></tfoot>
+                        </table></div>
+                    </div>
+                    <form id="bs-form">
+                        <h3 class="form-section-title">Seismic &amp; Site Parameters</h3><div class="two-col"><div class="input-group"><label for="bs_zone">Seismic Zone</label><select id="bs_zone" name="zone" required><option value="II">Zone II (Z = 0.10)</option><option value="III">Zone III (Z = 0.16)</option><option value="IV">Zone IV (Z = 0.24)</option><option value="V">Zone V (Z = 0.36)</option></select></div><div class="input-group"><label for="bs_soil">Soil Type</label><select id="bs_soil" name="soil" required><option value="I">I – Rocky / Hard</option><option value="II">II – Medium / Stiff</option><option value="III">III – Soft</option></select></div></div><div class="two-col"><div class="input-group"><label for="bs_Ta">Fundamental Period (T<sub>a</sub>)</label><div class="input-wrapper"><input type="number" id="bs_Ta" name="Ta" min="0.001" step="any" placeholder="e.g. 0.45" required><span class="unit">s</span></div></div><div class="input-group"><label for="bs_category">Building Category</label><select id="bs_category" name="category" required><option value="Residential / Simple Commercial">Residential / Simple Commercial (I = 1.2)</option><option value="Important Service & Community">Important Service &amp; Community (I = 1.5)</option><option value="All Other">All Other (I = 1.0)</option></select></div></div><div class="input-group"><label for="bs_frame">Frame System</label><select id="bs_frame" name="frame" required><option value="SMRF">SMRF (R = 5)</option><option value="OMRF">OMRF (R = 3)</option><option value="OBF Concentric">OBF Concentric (R = 4)</option><option value="SBF Concentric">SBF Concentric (R = 4.5)</option><option value="SBF Eccentric">SBF Eccentric (R = 5)</option></select></div>
+                        <button type="submit" class="btn-primary" id="bs-submit" disabled>Calculate Base Shear
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                        </button>
+                    </form>
+                </section>
+
+                <section class="glass-panel" id="bs-result" style="display:none;">
+                    <div class="result-header"><h2>Base Shear Results</h2></div>
+                    <div class="result-lines">
+                        <div><strong>Zone Factor (Z):</strong> <span id="bs-Z"></span></div>
+                        <div><strong>Importance Factor (I):</strong> <span id="bs-I"></span></div>
+                        <div><strong>Response Reduction (R):</strong> <span id="bs-R"></span></div>
+                        <div><strong>Spectral Acceleration (S<sub>a</sub>/g):</strong> <span id="bs-Sa"></span></div>
+                        <hr>
+                        <div><strong>Design Seismic Coefficient (A<sub>h</sub>):</strong> <span id="bs-Ah"></span></div>
+                        <div><strong>Total Seismic Weight (W<sub>s</sub>):</strong> <span id="bs-Ws"></span> kN</div>
+                    </div>
+                    <div class="final-verdict">
+                        <div class="verdict-card">
+                            <span class="verdict-label">Design Base Shear (V<sub>b</sub> = A<sub>h</sub> × W<sub>s</sub>)</span>
+                            <span class="verdict-value"><span id="bs-Vb"></span> <span style="font-size:0.5em">kN</span></span>
+                        </div>
+                    </div>
+                    <h3 class="form-section-title">Lateral Force Distribution</h3>
+                    <div class="table-wrap"><table class="data">
+                        <thead><tr><th>Floor</th><th>h<sub>i</sub> (m)</th><th>W<sub>s,i</sub> (kN)</th><th>W<sub>s,i</sub>·h<sub>i</sub>²</th><th>Q<sub>i</sub> (kN)</th><th>Storey Shear (kN)</th></tr></thead>
+                        <tbody id="bs-tbody"></tbody>
+                    </table></div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>
